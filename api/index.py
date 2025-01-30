@@ -1,23 +1,33 @@
 import json
 from http.server import BaseHTTPRequestHandler
 
-# Example student marks
-student_marks = {
-    "Alice": 90,
-    "Bob": 85,
-    "Charlie": 78,
-    "David": 92,
-    "Eva": 88,
-}
+# Load student marks from the JSON file
+def load_student_marks():
+    try:
+        with open("q-vercel-python.json", "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
 
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        # Extract query parameters
+        # Load student marks from the JSON file
+        student_marks = load_student_marks()
+
+        # Extract query parameters (the 'name' parameters)
         query = self.parse_query(self.path)
         names = query.get('name', [])
 
+        # Check if names exist in the student_marks dictionary
+        marks = []
+        for name in names:
+            mark = student_marks.get(name)
+            if mark is None:
+                marks.append("Name not found")  # Or use a default value like 0
+            else:
+                marks.append(mark)
+
         # Prepare response
-        marks = [student_marks.get(name, None) for name in names]
         response = {"marks": marks}
 
         # Return JSON response
