@@ -12,20 +12,23 @@ class handler(BaseHTTPRequestHandler):
         query = self.parse_query(self.path)
         names = query.get('name', [])
 
+        # Debugging log: Show the names received in the query
+        print(f"Received query names: {names}")
+
         # Find the marks for each name in the query in the correct order
         marks = []
         for name in names:
             # Look for the student's name in the student_marks data
             student = next((s for s in student_marks if s["name"] == name), None)
             if student is None:
-                marks.append(None)  # Use `None` for names not found
+                marks.append(0)  # If the student is not found, append 0
             else:
                 marks.append(student["marks"])
 
         # Prepare response
         response = {"marks": marks}
 
-        # Return JSON response
+        # Send response as JSON
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
         self.send_header('Access-Control-Allow-Origin', '*')  # Allow CORS
