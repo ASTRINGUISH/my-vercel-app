@@ -23,6 +23,10 @@ class handler(BaseHTTPRequestHandler):
             if student is not None:
                 marks.append(student["marks"])
 
+        # Ensure that the marks are in the same order as the query names
+        # Filter out any None values (for names that didn't match)
+        marks = [mark for mark in marks if mark is not None]
+
         # Prepare response
         response = {"marks": marks}
 
