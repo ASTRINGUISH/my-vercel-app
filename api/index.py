@@ -18,7 +18,7 @@ class handler(BaseHTTPRequestHandler):
             # Look for the student's name in the student_marks data
             student = next((s for s in student_marks if s["name"] == name), None)
             if student is None:
-                marks.append("Name not found")  # Or use a default value like 0
+                marks.append(None)  # Use `None` instead of "Name not found"
             else:
                 marks.append(student["marks"])
 
