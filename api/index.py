@@ -12,13 +12,13 @@ class handler(BaseHTTPRequestHandler):
         query = self.parse_query(self.path)
         names = query.get('name', [])
 
-        # Find the marks for each name
+        # Find the marks for each name in the query in the correct order
         marks = []
         for name in names:
             # Look for the student's name in the student_marks data
             student = next((s for s in student_marks if s["name"] == name), None)
             if student is None:
-                marks.append(None)  # Use `None` instead of "Name not found"
+                marks.append(None)  # Use `None` for names not found
             else:
                 marks.append(student["marks"])
 
