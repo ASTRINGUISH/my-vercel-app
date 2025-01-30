@@ -15,7 +15,7 @@ class handler(BaseHTTPRequestHandler):
         # Debugging log: Show the names received in the query
         print(f"Received query names: {names}")
 
-        # Find the marks for each name in the query in the correct order
+        # Find the marks for each name in the query, in the correct order
         marks = []
         for name in names:
             # Look for the student's name in the student_marks data
