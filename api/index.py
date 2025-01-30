@@ -20,9 +20,7 @@ class handler(BaseHTTPRequestHandler):
         for name in names:
             # Look for the student's name in the student_marks data
             student = next((s for s in student_marks if s["name"] == name), None)
-            if student is None:
-                marks.append(0)  # If the student is not found, append 0
-            else:
+            if student is not None:
                 marks.append(student["marks"])
 
         # Prepare response
